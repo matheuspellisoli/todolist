@@ -52,17 +52,24 @@ app.post('/addTodo', (req, res) => {
 });
 
 app.post('/removeTodo', (req, res)=> {
-    
-    mongoClient.connect('url', (err, db) => {
+   
+    ObjectID = require('mongodb').ObjectID,    
+    mongoClient.connect("mongodb://127.0.0.1:27017", (err, db) => {
         
         if (!err) {
-            let todo = req.body.todo;
+            let todo =  new ObjectID(req.body._id);
 
+            console.log(todo);
+
+            let collection = db.collection('toolist');
+            collection.remove( {
+                _id : todo
+            });
         }
-    });
-
-});
-    
+        db.close();
+    })   
+    res.sendStatus(200);
+    })    
 
 
 
