@@ -15,6 +15,11 @@ $("ul").on("click", "span", function (event) {
 $("#textbox").on("keypress", function (event) {
     if (event.which === 13) {
         var newTodo = $(this).val();
+        
+         if(newTodo.length <= 0){
+            return;
+        }
+        
         $(this).val("");
         $.post('/addTodo', {
             todo: newTodo
